@@ -1,0 +1,493 @@
+/* ========================
+    🎨 SISTEMA DE CORES (VARIÁVEIS)
+======================== */
+:root {
+    --bg-body: #000;
+    --bg-nav: rgba(0, 0, 0, 0.7);
+    --text-main: #ffffff;    /* Texto branco no modo Escuro */
+    --text-muted: #cccccc;
+    --accent-color: #ffcc00; 
+    --accent-gradient: linear-gradient(90deg, #ffcc00, #ff6600);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.light {
+    --bg-body: #ffffff;      /* FUNDO BRANCO */
+    --bg-nav: rgba(255, 255, 255, 0.9);
+    --text-main: #cc9900;    /* TEXTO AMARELO ESCURO (Visível no branco) */
+    --text-muted: #886a00;
+    --accent-color: #ffcc00; 
+    --accent-gradient: linear-gradient(90deg, #ffcc00, #ffaa00);
+    --card-bg: #f9f9f9;
+    --border-color: rgba(204, 153, 0, 0.2);
+}
+
+/* ========================
+    🔄 RESET & BASE
+======================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* --- FONTE E APLICAÇÃO GLOBAL ADICIONADA --- */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-main);
+    transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+body {
+    background: var(--bg-body); /* Alterado para usar a variável */
+    color: var(--text-main);   /* Alterado para usar a variável */
+    overflow-x: hidden;
+    min-height: 100vh;
+    scroll-behavior: smooth;
+}
+
+body.dark {
+    background: #0a0a0a;
+}
+
+body.light {
+    background: var(--bg-body);
+    color: var(--text-main);
+}
+
+/* ========================
+    🧭 NAVBAR
+======================== */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    flex-wrap: wrap;
+    animation: slideDown 0.8s ease-out;
+}
+
+body.light nav {
+    background: var(--bg-nav);
+}
+
+nav h1 {
+    color: #ffcc00;
+    letter-spacing: 1px;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    animation: glow 2s infinite alternate;
+}
+
+nav a {
+    color: var(--text-main); /* Alterado para variável */
+    margin: 0.5rem 0.5rem 0.5rem 1rem;
+    text-decoration: none;
+    position: relative;
+    transition: 0.3s;
+    font-weight: 500;
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+}
+
+nav a:hover {
+    color: #ffcc00;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #ffcc00;
+    transition: 0.3s;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* ========================
+    🎥 HERO (HOME) & SOBRE
+======================== */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0 1rem;
+}
+
+#bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.3);
+    z-index: -1;
+    animation: zoomIn 30s linear infinite;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 850px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    animation: fadeUp 1s ease;
+}
+
+.hero h2 {
+    font-size: clamp(2rem, 8vw, 4rem);
+    background: linear-gradient(90deg, #ffcc00, #ff6600);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 900;
+    text-transform: uppercase;
+    animation: glow 2s infinite alternate;
+}
+
+.sobre-container {
+    max-width: 90%;
+    margin-top: 1rem;
+    animation: fadeUp 1.2s ease;
+}
+
+.sobre-container span {
+    display: block;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-main);
+}
+
+.sobre-container p {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    line-height: 1.6;
+    color: var(--text-muted);
+    text-align: justify;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.sobre-container strong {
+    color: #ffcc00;
+    font-weight: 600;
+}
+
+/* ========================
+    🛒 CARRINHO & CHECKOUT
+======================== */
+.pagamento-box {
+    width: 90%;
+    max-width: 600px;
+    padding: 2rem;
+    border-radius: 20px;
+    background: var(--card-bg); /* Alterado para variável */
+    border: 1px solid var(--border-color);
+    margin: 2rem auto;
+    animation: fadeUp 1s ease;
+}
+
+#listaCarrinho {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+#listaCarrinho li {
+    background: var(--card-bg);
+    margin-bottom: 10px;
+    padding: 1rem;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    transition: transform 0.3s;
+}
+
+#listaCarrinho li:hover {
+    transform: scale(1.02);
+}
+
+#listaCarrinho li button {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.7rem;
+    background: #ff4444;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff !important; /* Força cor branca no botão remover */
+}
+
+/* Resumo de Valores */
+.resumo-valores {
+    margin-top: 1rem;
+    background: var(--card-bg) !important;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.resumo-valores p {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: var(--text-muted) !important;
+}
+
+.resumo-valores h3 {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+    color: #ffcc00 !important;
+}
+
+/* ÁREAS DE PAGAMENTO */
+#secaoCartao, #secaoPix, #secaoBoleto {
+    background: var(--card-bg) !important;
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin-top: 15px;
+    border: 1px solid var(--accent-color);
+    color: var(--text-main) !important;
+}
+
+#secaoBoleto h4, #secaoPix h4 {
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+#linhaDigitavel {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    background: var(--bg-body) !important;
+    color: var(--accent-color) !important;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    display: block;
+    word-break: break-all;
+    text-align: center;
+    margin: 15px 0;
+}
+
+#qrcode img {
+    border: 5px solid white;
+    border-radius: 10px;
+}
+
+/* ========================
+    🛍️ PRODUTOS (LOJA)
+======================== */
+.catalogo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    transition: 0.3s;
+    animation: fadeUp 1s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.03);
+    border-color: #ffcc00;
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+}
+
+.card img {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 1rem;
+    transition: transform 0.3s;
+}
+
+/* ========================
+    🔘 BOTÕES & INPUTS
+======================== */
+button, .btn-explorar {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 30px;
+    background: var(--accent-gradient);
+    color: #000 !important; /* Força contraste no botão */
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.6);
+}
+
+body.light button {
+    background: var(--accent-gradient);
+    color: #000 !important;
+}
+
+select, .extras-carrinho input, #secaoCartao input {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-body);
+    color: var(--text-main);
+    outline: none;
+}
+
+/* ========================
+    🔐 AUTH MODERNO
+======================== */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px);
+    padding: 20px;
+}
+
+.auth-box {
+    display: flex;
+    width: 900px;
+    max-width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--card-bg);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.auth-left {
+    width: 50%;
+    background: var(--accent-gradient);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.left-content img {
+    width: 250px;
+    margin-bottom: 15px;
+}
+
+.left-content h2 { color: #000 !important; }
+.left-content p { color: #222 !important; }
+
+.auth-right {
+    width: 50%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-right h2 { margin-bottom: 20px; color: #ffcc00 !important; }
+
+.input-group { position: relative; margin-bottom: 15px; }
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: var(--bg-body);
+    color: var(--text-main);
+}
+
+.toggle-senha {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--text-main);
+}
+
+/* ========================
+    🎬 ANIMAÇÕES & LOADER
+======================== */
+#loader {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* ========================
+    🦶 FOOTER
+======================== */
+.footer {
+    padding: 2rem 1rem;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    margin-top: 2rem;
+}
+
+.footer p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* ========================
+    📱 RESPONSIVIDADE
+======================== */
+@media (max-width: 768px) {
+    nav { flex-direction: column; align-items: flex-start; }
+    nav a { margin-left: 0; }
+    .auth-box { flex-direction: column; }
+    .auth-left { display: none; }
+    .auth-right { width: 100%; }
+    .hero-content { width: 100%; }
+    .catalogo { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+}
+
+@media (max-width: 480px) {
+    .catalogo { grid-template-columns: 1fr; }
+    #listaCarrinho li { flex-direction: column; align-items: flex-start; }
+    #listaCarrinho li button { margin-top: 0.5rem; }
+    button, .btn-explorar { width: 100%; }
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Elite Hoops</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="img/ELITE HOOPS.png" type="image/x-icon">
+</head>
+<body>
+
+<div id="loader"><h1>ELITE HOOPS</h1></div>
+<div class="cursor"></div>
+
+<nav>
+    <h1>ELITE HOOPS</h1>
+    <div>
+        <a href="cadastro.html">Cadastrar</a>
+    </div>
+</nav>
+
+<div class="auth-container">
+  <div class="auth-box">
+
+  <!-- 🔥 LADO ESQUERDO -->
+    <div class="auth-left">
+      <div class="left-content">
+        <img src="img/elitehooops.png" alt="logo">
+        <h2>Elite Hoops</h2>
+        <p>Entre para o jogo. Seu estilo começa aqui.</p>
+      </div>
+    </div>
+
+
+<!-- 📋 LADO DIREITO -->
+    <div class="auth-right">
+      <h2>Login</h2>
+
+      <div class="input-group">
+        <input type="email" id="email" placeholder="Email">
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="senha" placeholder="Senha">
+        <span class="toggle-senha" onclick="toggleSenha()"></span>
+      </div>
+
+      <button onclick="login()">Entrar</button>
+
+      <p>Não tem conta? <a href="cadastro.html">Criar uma conta</a></p>
+    </div>
+
+  </div>
+</div>
+
+<div id="toast"></div>
+<div id="pageTransition"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

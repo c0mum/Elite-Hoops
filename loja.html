@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Loja - Elite Hoops</title>
+<link rel="stylesheet" href="style.css">
+<link rel="shortcut icon" href="/img/ELITE HOOPS.png" type="image/x-icon">
+</head>
+
+<body>
+
+<!-- LOADER -->
+
+<div id="loader">
+  <h1>ELITE HOOPS</h1>
+</div>
+
+<div class="cursor"></div>
+
+<!-- NAVBAR -->
+
+<nav>
+  <h1>ELITE HOOPS</h1>
+
+  <div>
+    <a href="index.html">Home</a>
+    <a href="carrinho.html">Carrinho</a>
+  </div>
+
+  <div id="userArea"></div>
+</nav>
+
+<!-- FILTROS -->
+
+<div class="filtros">
+
+  <input type="text" id="busca" placeholder="Buscar produto...">
+
+  <select id="categoria">
+    <option value="">Todas categorias</option>
+    <option value="basquete">Tênis de basquete</option>
+    <option value="futebol">Camisa de futebol</option>
+    <option value="moletom">Moletom</option>
+    <option value="calca">Calça</option>
+    <option value="short">Short</option>
+    <option value="meia">Meia</option>
+  </select>
+
+  <select id="ordenar">
+    <option value="">Ordenar</option>
+    <option value="menor">Menor preço</option>
+    <option value="maior">Maior preço</option>
+  </select>
+
+</div>
+
+<!-- CATÁLOGO -->
+
+<section class="catalogo" id="catalogo"></section>
+
+<!-- TOAST -->
+
+<div id="toast"></div>
+
+<!-- TRANSIÇÃO -->
+
+<div id="pageTransition"></div>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+  <p>&copy; 2026 Elite Hoops. Todos os direitos reservados.</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
