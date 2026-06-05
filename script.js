@@ -1,12 +1,24 @@
+
 /**
- * SISTEMA DE E-COMMERCE PRO - ELITE HOOPS v2.0
- * Funcionalidades: Temas Dinâmicos, Frete, Pagamentos e Gestão de Produtos
- * Total de Linhas: Refatorado para máxima estabilidade
+ * ==========================================
+ * 🏀 ELITE HOOPS - SISTEMA E-COMMERCE PRO
+ * ==========================================
+ * ✅ Login
+ * ✅ Cadastro
+ * ✅ Carrinho
+ * ✅ Tema Dark/Light
+ * ✅ Cupons
+ * ✅ Frete
+ * ✅ Pagamentos
+ * ✅ Persistência LocalStorage
+ * ✅ Loader
+ * ✅ Segurança básica
+ * ==========================================
  */
 
-// ========================
-// 🧠 BASE DE DADOS (PRODUTOS)
-// ========================
+// ==========================================
+// 🛍️ PRODUTOS
+// ==========================================
 const produtos = [
     { id: 1, nome: "Armour Spawn 3", preco: 240.00, img: "img/Armour Spawn 3.png", cat: "Basquete" },
     { id: 2, nome: "Nike Ja 3", preco: 1299.00, img: "img/ja3.jpg", cat: "Basquete" },
@@ -31,273 +43,849 @@ const produtos = [
     { id: 21, nome: "Meia Nike Esportiva M2", preco: 39.99, img: "img/meia2.png", cat: "Meias" },
     { id: 22, nome: "Meia Nike Esportiva M3", preco: 25.99, img: "img/meia3.png", cat: "Meias" },
     { id: 23, nome: "Meia Nike Esportiva M4", preco: 35.99, img: "img/meia4.png", cat: "Meias" },
-    { id: 24, nome: "Moletom Basquet B1", preco: 299.99, img: "img/moletom1.png", cat: "Moletom" },
-    { id: 25, nome: "Moletom Basquet B2", preco: 199.99, img: "img/moletom2.png", cat: "Moletom" },
-    { id: 26, nome: "Moletom Basquet B3", preco: 399.99, img: "img/moletom3.png", cat: "Moletom" },
-    { id: 27, nome: "Moletom Basquet B4", preco: 99.99, img: "img/moletom4.png", cat: "Moletom" },
+    { id: 24, nome: "Moletom Nike Esportiva M1", preco: 299.99, img: "img/moletom1.png", cat: "Moletom" },
+    { id: 25, nome: "Moletom Nike Esportiva M2", preco: 199.99, img: "img/moletom2.png", cat: "Moletom" },
+    { id: 26, nome: "Moletom Nike Esportiva M3", preco: 399.99, img: "img/moletom3.png", cat: "Moletom" },
+    { id: 27, nome: "Moletom Nike Esportiva M4", preco: 99.99, img: "img/moletom4.png", cat: "Moletom" },
 ];
 
-// ========================
-// 💾 GESTÃO DE USUÁRIOS & PREFERÊNCIAS
-// ========================
-function getUsers() { return JSON.parse(localStorage.getItem("users")) || []; }
-function saveUsers(users) { localStorage.setItem("users", JSON.stringify(users)); }
+// ==========================================
+// 💾 LOCAL STORAGE
+// ==========================================
+function getUsers() {
+    return JSON.parse(localStorage.getItem("users")) || [];
+}
 
-// ========================
-// 💰 UTILITÁRIOS DE FORMATAÇÃO
-// ========================
+function saveUsers(users) {
+    localStorage.setItem("users", JSON.stringify(users));
+}
+
+function getCarrinho() {
+    return JSON.parse(localStorage.getItem("carrinho")) || [];
+}
+
+function salvarCarrinho(carrinho) {
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+}
+
+// ==========================================
+// 💰 FORMATAR PREÇO
+// ==========================================
 function formatarPreco(valor) {
-    return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    return valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
 }
 
+// ==========================================
+// 🌗 TEMA DARK/LIGHT
+// ==========================================
+function alternarTema() {
+
+    document.body.classList.toggle("light");
+
+    const temaAtual = document.body.classList.contains("light")
+        ? "light"
+        : "dark";
+
+    localStorage.setItem("tema", temaAtual);
+
+    atualizarIconeTema();
+}
+
+// ==========================================
+// 🌙 ÍCONE TEMA
+// ==========================================
+function atualizarIconeTema() {
+
+    const botao = document.getElementById("theme-toggle");
+
+    if (!botao) return;
+
+    if (document.body.classList.contains("light")) {
+        botao.innerHTML = "☀️";
+    } else {
+        botao.innerHTML = "🌙";
+    }
+}
+
+// ==========================================
+// 🔔 FEEDBACK
+// ==========================================
 function mostrarFeedback(msg, tipo = "sucesso") {
-    const t = document.getElementById("toast");
-    if (!t) return;
-    t.innerText = msg;
-    t.className = `toast show ${tipo}`;
-    setTimeout(() => t.classList.remove("show"), 3000);
+
+    const toast = document.getElementById("toast");
+
+    if (!toast) {
+        alert(msg);
+        return;
+    }
+
+    toast.innerText = msg;
+    toast.className = `toast show ${tipo}`;
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 3000);
 }
 
-// ========================
-// 🛍️ RENDERIZAÇÃO DO CATÁLOGO (LOJA)
-// ========================
-function carregarTenis() {
-    const cat = document.getElementById("catalogo");
-    if (!cat) return;
+// ==========================================
+// 👤 CADASTRO
+// ==========================================
+function cadastro() {
 
-    cat.innerHTML = "";
-    produtos.forEach(p => {
-        cat.innerHTML += `
+    const nome = document.getElementById("nome")?.value.trim();
+    const email = document.getElementById("email")?.value.trim();
+    const senha = document.getElementById("senha")?.value.trim();
+
+    if (!nome || !email || !senha) {
+        mostrarFeedback("Preencha todos os campos", "erro");
+        return;
+    }
+
+    let users = getUsers();
+
+    const existe = users.find(user => user.email === email);
+
+    if (existe) {
+        mostrarFeedback("E-mail já cadastrado", "erro");
+        return;
+    }
+
+    users.push({
+        nome,
+        email,
+        senha
+    });
+
+    saveUsers(users);
+
+    mostrarFeedback("Cadastro realizado com sucesso!");
+
+    setTimeout(() => {
+        window.location.href = "login.html";
+    }, 1500);
+}
+
+// ==========================================
+// 🔐 LOGIN
+// ==========================================
+function login() {
+
+    const email = document.getElementById("email")?.value.trim();
+    const senha = document.getElementById("senha")?.value.trim();
+
+    if (!email || !senha) {
+        mostrarFeedback("Preencha todos os campos", "erro");
+        return;
+    }
+
+    const users = getUsers();
+
+    const user = users.find(
+        u => u.email === email && u.senha === senha
+    );
+
+    if (!user) {
+        mostrarFeedback("E-mail ou senha incorretos", "erro");
+        return;
+    }
+
+    localStorage.setItem("logado", "true");
+    localStorage.setItem("userAtual", JSON.stringify(user));
+
+    mostrarFeedback("Login realizado!");
+
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 1000);
+}
+
+// ==========================================
+// 🚪 LOGOUT
+// ==========================================
+function logout() {
+
+    localStorage.removeItem("logado");
+    localStorage.removeItem("userAtual");
+
+    window.location.href = "login.html";
+}
+
+// ==========================================
+// 🛍️ CARREGAR PRODUTOS
+// ==========================================
+function carregarTenis() {
+
+    const catalogo = document.getElementById("catalogo");
+
+    if (!catalogo) return;
+
+    catalogo.innerHTML = "";
+
+    produtos.forEach(produto => {
+
+        catalogo.innerHTML += `
             <div class="card">
-                <div class="tag">${p.cat}</div>
-                <img src="${p.img}" alt="${p.nome}">
-                <h3>${p.nome}</h3>
-                <p class="preco">${formatarPreco(p.preco)}</p>
-                <button class="btn-add" onclick="add('${p.nome}', ${p.preco})">Adicionar ao Carrinho</button>
+
+                <div class="tag">
+                    ${produto.cat}
+                </div>
+
+                <img
+                    src="${produto.img}"
+                    alt="${produto.nome}"
+                >
+
+                <h3>${produto.nome}</h3>
+
+                <p class="preco">
+                    ${formatarPreco(produto.preco)}
+                </p>
+
+                <button
+                    class="btn-add"
+                    onclick="add('${produto.nome}', ${produto.preco})"
+                >
+                    Adicionar ao Carrinho
+                </button>
+
             </div>
         `;
     });
 }
 
-// ========================
-// 🛒 LÓGICA DO CARRINHO
-// ========================
-function getCarrinho() { return JSON.parse(localStorage.getItem("carrinho")) || []; }
-function salvarCarrinho(c) { localStorage.setItem("carrinho", JSON.stringify(c)); }
-
+// ==========================================
+// 🛒 ADICIONAR CARRINHO
+// ==========================================
 function add(nome, preco) {
-    let c = getCarrinho();
-    c.push({ nome, preco, data: new Date() });
-    salvarCarrinho(c);
-    mostrarFeedback(`${nome} adicionado com sucesso!`);
-    if (document.getElementById("listaCarrinho")) carregarCarrinho();
-}
 
-function remover(i) {
-    let c = getCarrinho();
-    c.splice(i, 1);
-    salvarCarrinho(c);
+    let carrinho = getCarrinho();
+
+    carrinho.push({
+        nome,
+        preco
+    });
+
+    salvarCarrinho(carrinho);
+
+    mostrarFeedback(`${nome} adicionado ao carrinho!`);
+
     carregarCarrinho();
 }
 
-// ========================
-// 🎟️ CUPOM & FRETE
-// ========================
+// ==========================================
+// ❌ REMOVER ITEM
+// ==========================================
+function remover(index) {
+
+    let carrinho = getCarrinho();
+
+    carrinho.splice(index, 1);
+
+    salvarCarrinho(carrinho);
+
+    carregarCarrinho();
+
+    mostrarFeedback("Produto removido!");
+}
+
+// ==========================================
+// 🎟️ CUPONS
+// ==========================================
 let descontoGlobal = 0;
-function aplicarCupom() {
-    const cupomInput = document.getElementById("cupom");
-    if (!cupomInput) return;
-    const cupom = cupomInput.value.toUpperCase();
-    const validos = { "DEV10": 0.10, "PROMO20": 0.20, "SAIRDOZERO": 0.50 };
 
-    if (validos[cupom]) {
-        descontoGlobal = validos[cupom];
+function aplicarCupom() {
+
+    const cupomInput = document.getElementById("cupom");
+
+    if (!cupomInput) return;
+
+    const cupom = cupomInput.value.toUpperCase();
+
+    const cupons = {
+        DEV10: 0.10,
+        PROMO20: 0.20,
+        SAIRDOZERO: 0.50
+    };
+
+    if (cupons[cupom]) {
+
+        descontoGlobal = cupons[cupom];
+
         mostrarFeedback(`Cupom ${cupom} aplicado!`);
+
     } else {
+
         descontoGlobal = 0;
-        mostrarFeedback("Cupom inválido ou expirado", "erro");
+
+        mostrarFeedback("Cupom inválido", "erro");
     }
+
     carregarCarrinho();
 }
 
+// ==========================================
+// 🚚 FRETE
+// ==========================================
 let freteCalculado = 0;
+
 function calcularFreteUI() {
+
     const cepInput = document.getElementById("cep");
+
     if (!cepInput) return;
+
     const cep = cepInput.value.replace(/\D/g, "");
 
-    if (!cep || cep.length !== 8) {
-        mostrarFeedback("Informe um CEP válido", "erro");
-        freteCalculado = 0;
+    if (cep.length !== 8) {
+        mostrarFeedback("CEP inválido", "erro");
         return;
     }
 
-    const prefixo = parseInt(cep.substring(0, 2));
-    if (prefixo >= 1 && prefixo <= 19) freteCalculado = 15.00;
-    else if (prefixo >= 20 && prefixo <= 28) freteCalculado = 22.50;
-    else freteCalculado = 35.00;
+    const prefixo = Number(cep.substring(0, 2));
+
+    if (prefixo <= 19) {
+        freteCalculado = 15;
+    }
+    else if (prefixo <= 28) {
+        freteCalculado = 22.5;
+    }
+    else {
+        freteCalculado = 35;
+    }
 
     mostrarFeedback("Frete calculado!");
+
     carregarCarrinho();
 }
 
-// ========================
-// 🛒 ATUALIZAR INTERFACE DO CARRINHO
-// ========================
+// ==========================================
+// 🛒 RENDERIZAR CARRINHO
+// ==========================================
 function carregarCarrinho() {
+
     const lista = document.getElementById("listaCarrinho");
+
     if (!lista) return;
 
-    let carrinho = getCarrinho();
-    let subtotal = 0;
+    const carrinho = getCarrinho();
+
     lista.innerHTML = "";
 
-    carrinho.forEach((item, i) => {
+    let subtotal = 0;
+
+    carrinho.forEach((item, index) => {
+
         subtotal += item.preco;
+
         lista.innerHTML += `
             <li class="item-carrinho">
+
                 <span>${item.nome}</span>
-                <div>
-                    <strong>${formatarPreco(item.preco)}</strong>
-                    <button class="btn-remover" onclick="remover(${i})">X</button>
+
+                <div class="acoes-item">
+
+                    <strong>
+                        ${formatarPreco(item.preco)}
+                    </strong>
+
+                    <button
+                        class="btn-remover"
+                        onclick="remover(${index})"
+                    >
+                        X
+                    </button>
+
                 </div>
+
             </li>
         `;
     });
 
-    let valorDesconto = subtotal * descontoGlobal;
-    let totalFinal = subtotal - valorDesconto + freteCalculado;
+    const desconto = subtotal * descontoGlobal;
 
-    // Atualização Segura dos Elementos
-    const atualizarTexto = (id, texto) => {
-        const el = document.getElementById(id);
-        if (el) el.innerText = texto;
-    };
+    const total = subtotal - desconto + freteCalculado;
 
     atualizarTexto("subtotal", formatarPreco(subtotal));
     atualizarTexto("freteTotal", formatarPreco(freteCalculado));
-    atualizarTexto("descontoTotal", "-" + formatarPreco(valorDesconto));
-    atualizarTexto("totalGeral", formatarPreco(totalFinal));
+    atualizarTexto("descontoTotal", "-" + formatarPreco(desconto));
+    atualizarTexto("totalGeral", formatarPreco(total));
 
-    // Parcelamento
-    const comboParcelas = document.getElementById("parcelas");
-    if (comboParcelas) {
-        comboParcelas.innerHTML = "";
-        for (let j = 1; j <= 12; j++) {
-            let vFinalP = totalFinal / j;
-            comboParcelas.innerHTML += `<option value="${j}">${j}x de ${formatarPreco(vFinalP)}</option>`;
+    const parcelas = document.getElementById("parcelas");
+
+    if (parcelas) {
+
+        parcelas.innerHTML = "";
+
+        for (let i = 1; i <= 12; i++) {
+
+            const valorParcela = total / i;
+
+            parcelas.innerHTML += `
+                <option value="${i}">
+                    ${i}x de ${formatarPreco(valorParcela)}
+                </option>
+            `;
         }
     }
 }
 
-// ========================
-// 📱 PAGAMENTO & MÉTODOS
-// ========================
+// ==========================================
+// 🧩 UTIL
+// ==========================================
+function atualizarTexto(id, texto) {
+
+    const el = document.getElementById(id);
+
+    if (el) {
+        el.innerText = texto;
+    }
+}
+
+// ==========================================
+// 💳 PAGAMENTOS
+// ==========================================
 function gerenciarMetodosPagamento() {
+
     const metodo = document.getElementById("metodoPagamento")?.value;
-    const sPix = document.getElementById("secaoPix");
-    const sBoleto = document.getElementById("secaoBoleto");
-    const sCartao = document.getElementById("secaoCartao");
 
-    const secoes = [sPix, sBoleto, sCartao];
-    secoes.forEach(s => { if (s) s.style.display = "none"; });
+    const secaoPix = document.getElementById("secaoPix");
+    const secaoBoleto = document.getElementById("secaoBoleto");
+    const secaoCartao = document.getElementById("secaoCartao");
 
-    if (metodo === "pix" && sPix) {
-        sPix.style.display = "block";
+    [secaoPix, secaoBoleto, secaoCartao].forEach(secao => {
+
+        if (secao) {
+            secao.style.display = "none";
+        }
+    });
+
+    if (metodo === "pix" && secaoPix) {
+
+        secaoPix.style.display = "block";
+
         const qr = document.getElementById("qrcode");
-        if (qr) qr.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ELITEHOOPSPIX${Math.random()}" alt="QR">`;
-    } 
-    else if (metodo === "boleto" && sBoleto) {
-        sBoleto.style.display = "block";
+
+        if (qr) {
+
+            qr.innerHTML = `
+                <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ELITEHOOPSPIX"
+                    alt="QR CODE PIX"
+                >
+            `;
+        }
+    }
+
+    if (metodo === "boleto" && secaoBoleto) {
+
+        secaoBoleto.style.display = "block";
+
         const linha = document.getElementById("linhaDigitavel");
-        if (linha) linha.innerText = "23793.38128 60083.435252 63000.063319 8 980100000000";
-    } 
-    else if (metodo === "cartao" && sCartao) {
-        sCartao.style.display = "block";
+
+        if (linha) {
+
+            linha.innerText =
+                "23793.38128 60083.435252 63000.063319";
+        }
+    }
+
+    if (metodo === "cartao" && secaoCartao) {
+        secaoCartao.style.display = "block";
     }
 }
 
-// ========================
-// 👤 LOGIN / AUTH / LOGOUT
-// ========================
-function logout() {
-    localStorage.removeItem("logado");
-    localStorage.removeItem("userAtual");
-    window.location.href = "login.html";
-}
-
-function login() {
-    const e = document.getElementById("email");
-    const s = document.getElementById("senha");
-    if (!e || !s) return;
-
-    let user = getUsers().find(u => u.email === e.value && u.senha === s.value);
-    if (!user) return mostrarFeedback("E-mail ou senha incorretos", "erro");
-
-    localStorage.setItem("logado", "true");
-    localStorage.setItem("userAtual", JSON.stringify(user));
-    window.location.href = "index.html";
-}
-
-// ========================
-// 🚀 INICIALIZAÇÃO GLOBAL (ON LOAD)
-// ========================
+// ==========================================
+// 🚀 INICIALIZAÇÃO
+// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
-    const body = document.body;
 
-    // 1. PERSISTÊNCIA DO TEMA
+    // ======================================
+    // 🌗 CARREGAR TEMA
+    // ======================================
     const temaSalvo = localStorage.getItem("tema");
-    if (temaSalvo === "light") body.classList.add("light");
 
-    // 2. BOTÃO DE TEMA (APENAS NA HOME)
-    const btnTema = document.getElementById("theme-toggle");
-    if (btnTema) {
-        const isHome = window.location.pathname.endsWith("index.html") || window.location.pathname === "/";
-        btnTema.style.display = isHome ? "inline-block" : "none";
-
-        btnTema.addEventListener("click", () => {
-            body.classList.toggle("light");
-            localStorage.setItem("tema", body.classList.contains("light") ? "light" : "dark");
-        });
+    if (temaSalvo === "light") {
+        document.body.classList.add("light");
     }
 
-    // 3. PROTEÇÃO DE ROTAS
-    const path = window.location.pathname;
-    const isPublic = path.includes("login.html") || path.includes("cadastro.html");
-    const logado = localStorage.getItem("logado") === "true";
+    atualizarIconeTema();
 
-    if (!logado && !isPublic) {
+    // ======================================
+    // 🌙 BOTÃO TEMA
+    // ======================================
+    const btnTema = document.getElementById("theme-toggle");
+
+    if (btnTema) {
+        btnTema.addEventListener("click", alternarTema);
+    }
+
+    // ======================================
+    // 🔐 PROTEÇÃO DE ROTAS
+    // ======================================
+    const path = window.location.pathname.split("/").pop();
+
+    const paginasPublicas = [
+        "login.html",
+        "cadastro.html",
+        ""
+    ];
+
+    const logado =
+        localStorage.getItem("logado") === "true";
+
+    if (!logado && !paginasPublicas.includes(path)) {
+
         window.location.href = "login.html";
         return;
     }
 
-    // 4. ÁREA DO USUÁRIO
+    // ======================================
+    // 👤 USER AREA
+    // ======================================
     const userArea = document.getElementById("userArea");
-    const user = JSON.parse(localStorage.getItem("userAtual"));
+
+    const user =
+        JSON.parse(localStorage.getItem("userAtual"));
+
     if (userArea && user) {
+
         userArea.innerHTML = `
             <div class="user-info">
-                <span>Bem-vindo, <strong>${user.nome}</strong></span>
-                <button onclick="logout()" class="btn-sair">Sair</button>
-            </div>`;
+
+                <span>
+                    Bem-vindo,
+                    <strong>${user.nome}</strong>
+                </span>
+
+                <button
+                    onclick="logout()"
+                    class="btn-sair"
+                >
+                    Sair
+                </button>
+
+            </div>
+        `;
     }
 
-    // 5. RENDERIZAÇÃO DE CONTEÚDO
+    // ======================================
+    // 🛍️ CARREGAR PRODUTOS
+    // ======================================
     carregarTenis();
+
+    // ======================================
+    // 🛒 CARREGAR CARRINHO
+    // ======================================
     carregarCarrinho();
 
-    // 6. EVENTOS DE PAGAMENTO
-    const selPagamento = document.getElementById("metodoPagamento");
-    if (selPagamento) selPagamento.addEventListener("change", gerenciarMetodosPagamento);
+    // ======================================
+    // 💳 PAGAMENTOS
+    // ======================================
+    const metodoPagamento =
+        document.getElementById("metodoPagamento");
 
-    // 7. LOADER FINAL
+    if (metodoPagamento) {
+
+        metodoPagamento.addEventListener(
+            "change",
+            gerenciarMetodosPagamento
+        );
+
+        gerenciarMetodosPagamento();
+    }
+
+    // ======================================
+    // ⏳ LOADER
+    // ======================================
     const loader = document.getElementById("loader");
+
     if (loader) {
+
         setTimeout(() => {
+
             loader.style.opacity = "0";
-            setTimeout(() => loader.remove(), 500);
+
+            setTimeout(() => {
+                loader.remove();
+            }, 500);
+
         }, 1200);
     }
+
+    console.log("🏀 Elite Hoops carregado com sucesso!");
 });
 
-console.log("Elite Hoops System Initialized - Version 2.0");
+
+// ==========================================
+// ♿ ACESSIBILIDADE ELITE HOOPS
+// ==========================================
+
+let tamanhoFonteAtual = 16;
+
+// Abrir / fechar painel
+const btnAcessibilidade =
+    document.getElementById("btnAcessibilidade");
+
+const painelAcessibilidade =
+    document.getElementById("painelAcessibilidade");
+
+if (btnAcessibilidade && painelAcessibilidade) {
+
+    btnAcessibilidade.addEventListener("click", () => {
+
+        painelAcessibilidade.classList.toggle("ativo");
+
+    });
+
+}
+
+// ==========================================
+// 🔍 AUMENTAR FONTE
+// ==========================================
+function aumentarFonte() {
+
+    tamanhoFonteAtual += 2;
+
+    document.body.style.fontSize =
+        tamanhoFonteAtual + "px";
+
+    localStorage.setItem(
+        "fonte",
+        tamanhoFonteAtual
+    );
+}
+
+// ==========================================
+// 🔎 DIMINUIR FONTE
+// ==========================================
+function diminuirFonte() {
+
+    if (tamanhoFonteAtual <= 12) return;
+
+    tamanhoFonteAtual -= 2;
+
+    document.body.style.fontSize =
+        tamanhoFonteAtual + "px";
+
+    localStorage.setItem(
+        "fonte",
+        tamanhoFonteAtual
+    );
+}
+
+// ==========================================
+// 👨‍🦯 ALTO CONTRASTE
+// ==========================================
+function alternarContraste() {
+
+    document.body.classList.toggle(
+        "alto-contraste"
+    );
+
+    localStorage.setItem(
+        "altoContraste",
+        document.body.classList.contains(
+            "alto-contraste"
+        )
+    );
+}
+
+// ==========================================
+// 🎨 MODO DALTÔNICO
+// ==========================================
+function alternarDaltonico() {
+
+    document.body.classList.toggle(
+        "daltonico"
+    );
+
+    localStorage.setItem(
+        "daltonico",
+        document.body.classList.contains(
+            "daltonico"
+        )
+    );
+}
+
+// ==========================================
+// ✨ DESATIVAR ANIMAÇÕES
+// ==========================================
+function alternarAnimacoes() {
+
+    document.body.classList.toggle(
+        "sem-animacoes"
+    );
+
+    localStorage.setItem(
+        "animacoes",
+        document.body.classList.contains(
+            "sem-animacoes"
+        )
+    );
+}
+
+// ==========================================
+// 🔊 LEITOR DE TELA
+// ==========================================
+let falaAtual = null;
+
+function lerPagina() {
+
+    speechSynthesis.cancel();
+
+    const texto =
+        document.body.innerText;
+
+    falaAtual =
+        new SpeechSynthesisUtterance(texto);
+
+    falaAtual.lang = "pt-BR";
+
+    document.body.classList.add("lendo");
+
+    falaAtual.onend = () => {
+
+        document.body.classList.remove("lendo");
+
+    };
+
+    speechSynthesis.speak(falaAtual);
+}
+
+// ==========================================
+// 🛑 PARAR LEITURA
+// ==========================================
+function pararLeitura() {
+
+    speechSynthesis.cancel();
+
+    document.body.classList.remove("lendo");
+}
+
+// ==========================================
+// ⌨️ ATALHOS DE TECLADO
+// ==========================================
+document.addEventListener(
+    "keydown",
+    (e) => {
+
+        if (e.altKey && e.key === "1") {
+
+            document
+                .getElementById("inicio")
+                ?.scrollIntoView({
+                    behavior: "smooth"
+                });
+        }
+
+        if (e.altKey && e.key === "2") {
+
+            document
+                .getElementById("sobre")
+                ?.scrollIntoView({
+                    behavior: "smooth"
+                });
+        }
+
+        if (e.altKey && e.key === "3") {
+
+            document
+                .getElementById("contato")
+                ?.scrollIntoView({
+                    behavior: "smooth"
+                });
+        }
+
+        if (e.key === "Escape") {
+
+            speechSynthesis.cancel();
+
+            document.body.classList.remove(
+                "lendo"
+            );
+        }
+    }
+);
+
+// ==========================================
+// 💾 CARREGAR PREFERÊNCIAS
+// ==========================================
+window.addEventListener(
+    "load",
+    () => {
+
+        const fonte =
+            localStorage.getItem("fonte");
+
+        if (fonte) {
+
+            tamanhoFonteAtual =
+                parseInt(fonte);
+
+            document.body.style.fontSize =
+                fonte + "px";
+        }
+
+        if (
+            localStorage.getItem(
+                "altoContraste"
+            ) === "true"
+        ) {
+
+            document.body.classList.add(
+                "alto-contraste"
+            );
+        }
+
+        if (
+            localStorage.getItem(
+                "daltonico"
+            ) === "true"
+        ) {
+
+            document.body.classList.add(
+                "daltonico"
+            );
+        }
+
+        if (
+            localStorage.getItem(
+                "animacoes"
+            ) === "true"
+        ) {
+
+            document.body.classList.add(
+                "sem-animacoes"
+            );
+        }
+    }
+);
+
+// ==========================================
+// ♿ AJUSTE AUTOMÁTICO DE ALT
+// ==========================================
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        document
+            .querySelectorAll("img")
+            .forEach((img) => {
+
+                if (
+                    !img.hasAttribute("alt")
+                ) {
+
+                    img.alt =
+                        "Imagem Elite Hoops";
+                }
+            });
+    }
+);
+
+console.log(
+    "♿ Sistema de acessibilidade carregado!"
+);

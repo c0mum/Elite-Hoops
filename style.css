@@ -1,26 +1,26 @@
 /* ========================
-    🎨 SISTEMA DE CORES (VARIÁVEIS)
+    🎨 SISTEMA DE CORES
 ======================== */
 :root {
     --bg-body: #000;
     --bg-nav: rgba(0, 0, 0, 0.7);
-    --text-main: #ffffff;    /* Texto branco no modo Escuro */
+    --text-main: #ffffff;
     --text-muted: #cccccc;
-    --accent-color: #ffcc00; 
+    --accent-color: #ffcc00;
     --accent-gradient: linear-gradient(90deg, #ffcc00, #ff6600);
     --card-bg: rgba(255, 255, 255, 0.05);
     --border-color: rgba(255, 255, 255, 0.1);
 }
 
 body.light {
-    --bg-body: #ffffff;      /* FUNDO BRANCO */
-    --bg-nav: rgba(255, 255, 255, 0.9);
-    --text-main: #cc9900;    /* TEXTO AMARELO ESCURO (Visível no branco) */
-    --text-muted: #886a00;
-    --accent-color: #ffcc00; 
+    --bg-body: #ffffff;
+    --bg-nav: rgba(255, 255, 255, 0.95);
+    --text-main: #111111;
+    --text-muted: #555555;
+    --accent-color: #ffcc00;
     --accent-gradient: linear-gradient(90deg, #ffcc00, #ffaa00);
-    --card-bg: #f9f9f9;
-    --border-color: rgba(204, 153, 0, 0.2);
+    --card-bg: #f7f7f7;
+    --border-color: rgba(0, 0, 0, 0.1);
 }
 
 /* ========================
@@ -30,27 +30,25 @@ body.light {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* --- FONTE E APLICAÇÃO GLOBAL ADICIONADA --- */
+
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: var(--text-main);
-    transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        border 0.3s ease,
+        transform 0.3s ease;
 }
 
-body {
-    background: var(--bg-body); /* Alterado para usar a variável */
-    color: var(--text-main);   /* Alterado para usar a variável */
-    overflow-x: hidden;
-    min-height: 100vh;
+html {
     scroll-behavior: smooth;
 }
 
-body.dark {
-    background: #0a0a0a;
-}
-
-body.light {
+body {
     background: var(--bg-body);
     color: var(--text-main);
+    overflow-x: hidden;
+    min-height: 100vh;
 }
 
 /* ========================
@@ -60,49 +58,64 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     padding: 1rem 2rem;
-    background: rgba(0, 0, 0, 0.7);
+
+    background: var(--bg-nav);
+
     backdrop-filter: blur(12px);
+
     position: sticky;
     top: 0;
-    z-index: 1000;
-    flex-wrap: wrap;
-    animation: slideDown 0.8s ease-out;
-}
 
-body.light nav {
-    background: var(--bg-nav);
+    z-index: 1000;
+
+    flex-wrap: wrap;
+
+    border-bottom: 1px solid var(--border-color);
+
+    animation: slideDown 0.8s ease;
 }
 
 nav h1 {
-    color: #ffcc00;
+    color: var(--accent-color);
+
     letter-spacing: 1px;
+
     font-size: clamp(1.5rem, 4vw, 2rem);
-    animation: glow 2s infinite alternate;
+
+    font-weight: 900;
 }
 
 nav a {
-    color: var(--text-main); /* Alterado para variável */
-    margin: 0.5rem 0.5rem 0.5rem 1rem;
+    color: var(--text-main);
+
+    margin-left: 1rem;
+
     text-decoration: none;
+
     position: relative;
-    transition: 0.3s;
-    font-weight: 500;
-    font-size: clamp(0.8rem, 2.5vw, 1rem);
+
+    font-weight: 600;
 }
 
 nav a:hover {
-    color: #ffcc00;
+    color: var(--accent-color);
 }
 
 nav a::after {
     content: "";
+
     position: absolute;
-    bottom: -3px;
+
+    bottom: -4px;
     left: 0;
+
     width: 0%;
     height: 2px;
-    background: #ffcc00;
+
+    background: var(--accent-color);
+
     transition: 0.3s;
 }
 
@@ -111,350 +124,562 @@ nav a:hover::after {
 }
 
 /* ========================
-    🎥 HERO (HOME) & SOBRE
+   🌗 BOTÃO TEMA
+======================== */
+
+#theme-toggle{
+    width:45px;
+    height:45px;
+
+    border:none;
+    border-radius:50%;
+
+    background:linear-gradient(90deg,#ffcc00,#ff8800);
+
+    color:#000;
+
+    font-size:1.2rem;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.4s;
+}
+
+#theme-toggle:hover{
+    transform:rotate(180deg) scale(1.1);
+
+    box-shadow:0 0 20px rgba(255,204,0,.5);
+}
+
+/* ========================
+    🎥 HERO
 ======================== */
 .hero {
     position: relative;
+
     height: 100vh;
+
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+
     overflow: hidden;
+
     padding: 0 1rem;
 }
 
 #bg-video {
     position: absolute;
+
     top: 0;
     left: 0;
+
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+
     filter: brightness(0.3);
+
     z-index: -1;
-    animation: zoomIn 30s linear infinite;
 }
 
 .hero-content {
     text-align: center;
-    max-width: 850px;
-    padding: 1rem;
+
+    max-width: 900px;
+
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 1rem;
+
+    align-items: center;
+
     animation: fadeUp 1s ease;
 }
 
 .hero h2 {
-    font-size: clamp(2rem, 8vw, 4rem);
+    font-size: clamp(2rem, 8vw, 4.5rem);
+
     background: linear-gradient(90deg, #ffcc00, #ff6600);
+
     -webkit-background-clip: text;
+
     color: transparent;
-    font-weight: 900;
+
     text-transform: uppercase;
-    animation: glow 2s infinite alternate;
+
+    font-weight: 900;
 }
 
 .sobre-container {
     max-width: 90%;
-    margin-top: 1rem;
-    animation: fadeUp 1.2s ease;
 }
 
 .sobre-container span {
     display: block;
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    font-weight: bold;
+
     margin-bottom: 0.5rem;
-    text-transform: uppercase;
+
+    font-weight: bold;
+
     letter-spacing: 2px;
-    color: var(--text-main);
+
+    text-transform: uppercase;
 }
 
 .sobre-container p {
-    font-size: clamp(0.9rem, 2vw, 1rem);
-    line-height: 1.6;
+    line-height: 1.7;
+
     color: var(--text-muted);
+
     text-align: justify;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .sobre-container strong {
-    color: #ffcc00;
-    font-weight: 600;
+    color: var(--accent-color);
 }
 
 /* ========================
-    🛒 CARRINHO & CHECKOUT
-======================== */
-.pagamento-box {
-    width: 90%;
-    max-width: 600px;
-    padding: 2rem;
-    border-radius: 20px;
-    background: var(--card-bg); /* Alterado para variável */
-    border: 1px solid var(--border-color);
-    margin: 2rem auto;
-    animation: fadeUp 1s ease;
-}
-
-#listaCarrinho {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0;
-}
-
-#listaCarrinho li {
-    background: var(--card-bg);
-    margin-bottom: 10px;
-    padding: 1rem;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid var(--border-color);
-    font-size: 0.9rem;
-    transition: transform 0.3s;
-}
-
-#listaCarrinho li:hover {
-    transform: scale(1.02);
-}
-
-#listaCarrinho li button {
-    padding: 0.3rem 0.8rem;
-    font-size: 0.7rem;
-    background: #ff4444;
-    border-radius: 8px;
-    cursor: pointer;
-    color: #fff !important; /* Força cor branca no botão remover */
-}
-
-/* Resumo de Valores */
-.resumo-valores {
-    margin-top: 1rem;
-    background: var(--card-bg) !important;
-    padding: 1.5rem;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-}
-
-.resumo-valores p {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    color: var(--text-muted) !important;
-}
-
-.resumo-valores h3 {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid var(--border-color);
-    color: #ffcc00 !important;
-}
-
-/* ÁREAS DE PAGAMENTO */
-#secaoCartao, #secaoPix, #secaoBoleto {
-    background: var(--card-bg) !important;
-    padding: 1.5rem;
-    border-radius: 15px;
-    margin-top: 15px;
-    border: 1px solid var(--accent-color);
-    color: var(--text-main) !important;
-}
-
-#secaoBoleto h4, #secaoPix h4 {
-    color: #ffcc00;
-    margin-bottom: 10px;
-}
-
-#linhaDigitavel {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.9rem;
-    background: var(--bg-body) !important;
-    color: var(--accent-color) !important;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    display: block;
-    word-break: break-all;
-    text-align: center;
-    margin: 15px 0;
-}
-
-#qrcode img {
-    border: 5px solid white;
-    border-radius: 10px;
-}
-
-/* ========================
-    🛍️ PRODUTOS (LOJA)
+    🛍️ CATÁLOGO
 ======================== */
 .catalogo {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
+
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+    gap: 2rem;
+
     padding: 2rem;
+
+    align-items: stretch;
 }
 
+/* ========================
+    🃏 CARD PRODUTO
+======================== */
 .card {
     background: var(--card-bg);
+
     border-radius: 20px;
+
     padding: 1rem;
+
     border: 1px solid var(--border-color);
+
     text-align: center;
-    transition: 0.3s;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    min-height: 540px;
+
+    overflow: hidden;
+
     animation: fadeUp 1s ease;
 }
 
 .card:hover {
-    transform: translateY(-10px) scale(1.03);
-    border-color: #ffcc00;
-    box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+    transform: translateY(-8px);
+
+    border-color: var(--accent-color);
+
+    box-shadow: 0 0 25px rgba(255, 204, 0, 0.25);
 }
 
+/* ========================
+    🏷️ TAG
+======================== */
+.tag {
+    background: var(--accent-gradient);
+
+    color: #000 !important;
+
+    padding: 6px 14px;
+
+    border-radius: 20px;
+
+    width: fit-content;
+
+    margin: 0 auto 1rem;
+
+    font-size: 0.8rem;
+
+    font-weight: bold;
+}
+
+/* ========================
+    🖼️ IMAGENS PRODUTOS
+======================== */
 .card img {
     width: 100%;
+
+    height: 260px;
+
+    object-fit: contain;
+
+    background: #fff;
+
     border-radius: 15px;
+
+    padding: 10px;
+
     margin-bottom: 1rem;
-    transition: transform 0.3s;
+
+    display: block;
 }
 
 /* ========================
-    🔘 BOTÕES & INPUTS
+    📝 TÍTULOS
 ======================== */
-button, .btn-explorar {
-    padding: 0.8rem 2rem;
-    border: none;
-    border-radius: 30px;
-    background: var(--accent-gradient);
-    color: #000 !important; /* Força contraste no botão */
-    cursor: pointer;
-    transition: 0.3s;
+.card h3 {
+    font-size: 1.3rem;
+
+    min-height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    line-height: 1.3;
+
+    margin-bottom: 0.5rem;
+}
+
+.preco {
+    font-size: 1.3rem;
+
+    color: var(--accent-color);
+
     font-weight: bold;
-    text-transform: uppercase;
-    font-size: clamp(0.8rem, 2.5vw, 0.95rem);
-}
 
-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 204, 0, 0.6);
-}
-
-body.light button {
-    background: var(--accent-gradient);
-    color: #000 !important;
-}
-
-select, .extras-carrinho input, #secaoCartao input {
-    width: 100%;
-    padding: 0.8rem;
-    margin: 0.5rem 0;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-    background: var(--bg-body);
-    color: var(--text-main);
-    outline: none;
+    margin-bottom: 1rem;
 }
 
 /* ========================
-    🔐 AUTH MODERNO
+    🔘 BOTÕES
+======================== */
+button,
+.btn-explorar,
+.btn-add {
+    padding: 0.9rem 1.5rem;
+
+    border: none;
+
+    border-radius: 30px;
+
+    background: var(--accent-gradient);
+
+    color: #000 !important;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    width: 100%;
+}
+
+button:hover,
+.btn-add:hover {
+    transform: scale(1.03);
+
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+}
+
+/* ========================
+    🛒 CARRINHO
+======================== */
+.pagamento-box {
+    width: 90%;
+    max-width: 650px;
+
+    padding: 2rem;
+
+    border-radius: 20px;
+
+    background: var(--card-bg);
+
+    border: 1px solid var(--border-color);
+
+    margin: 2rem auto;
+}
+
+#listaCarrinho {
+    list-style: none;
+
+    margin-top: 1rem;
+}
+
+#listaCarrinho li {
+    background: rgba(255,255,255,0.05);
+
+    margin-bottom: 10px;
+
+    padding: 1rem;
+
+    border-radius: 12px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border: 1px solid var(--border-color);
+}
+
+#listaCarrinho li button {
+    background: crimson;
+
+    color: #fff !important;
+
+    width: auto;
+
+    padding: 0.5rem 1rem;
+}
+
+/* ========================
+    💰 RESUMO
+======================== */
+.resumo-valores {
+    margin-top: 1rem;
+
+    background: rgba(255,255,255,0.03);
+
+    padding: 1.5rem;
+
+    border-radius: 12px;
+
+    border: 1px solid var(--border-color);
+}
+
+.resumo-valores p,
+.resumo-valores h3 {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.resumo-valores h3 {
+    color: var(--accent-color);
+
+    border-top: 1px solid var(--border-color);
+
+    padding-top: 10px;
+}
+
+/* ========================
+    💳 PAGAMENTO
+======================== */
+#secaoCartao,
+#secaoPix,
+#secaoBoleto {
+    background: rgba(255,255,255,0.03);
+
+    padding: 1.5rem;
+
+    border-radius: 15px;
+
+    margin-top: 15px;
+
+    border: 1px solid var(--accent-color);
+}
+
+#linhaDigitavel {
+    font-family: monospace;
+
+    background: #111;
+
+    color: #00ff88 !important;
+
+    padding: 15px;
+
+    border-radius: 8px;
+
+    margin-top: 1rem;
+
+    word-break: break-all;
+}
+
+#qrcode img {
+    width: 180px;
+    height: 180px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    background: white;
+
+    padding: 10px;
+}
+
+/* ========================
+    🔐 AUTH
 ======================== */
 .auth-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 80px);
+
+    min-height: calc(100vh - 80px);
+
     padding: 20px;
 }
 
 .auth-box {
     display: flex;
+
     width: 900px;
     max-width: 100%;
+
     border-radius: 20px;
+
     overflow: hidden;
+
     background: var(--card-bg);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+
+    border: 1px solid var(--border-color);
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
 
 .auth-left {
     width: 50%;
+
     background: var(--accent-gradient);
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     text-align: center;
+
+    padding: 2rem;
 }
 
 .left-content img {
-    width: 250px;
+    width: 220px;
+
     margin-bottom: 15px;
 }
 
-.left-content h2 { color: #000 !important; }
-.left-content p { color: #222 !important; }
+.left-content h2,
+.left-content p {
+    color: #000 !important;
+}
 
 .auth-right {
     width: 50%;
+
     padding: 40px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.auth-right h2 { margin-bottom: 20px; color: #ffcc00 !important; }
+.auth-right h2 {
+    margin-bottom: 20px;
 
-.input-group { position: relative; margin-bottom: 15px; }
+    color: var(--accent-color);
+}
+
+.input-group {
+    position: relative;
+
+    margin-bottom: 15px;
+}
 
 .input-group input {
     width: 100%;
-    padding: 12px;
+
+    padding: 14px;
+
     border-radius: 10px;
-    border: none;
-    background: var(--bg-body);
+
+    border: 1px solid var(--border-color);
+
+    background: rgba(255,255,255,0.05);
+
     color: var(--text-main);
+
+    outline: none;
 }
 
 .toggle-senha {
     position: absolute;
+
     right: 10px;
     top: 50%;
+
     transform: translateY(-50%);
+
     cursor: pointer;
-    color: var(--text-main);
 }
 
 /* ========================
-    🎬 ANIMAÇÕES & LOADER
+    🔔 TOAST
 ======================== */
-#loader {
+#toast {
     position: fixed;
-    inset: 0;
-    background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+    bottom: 30px;
+    right: 30px;
+
+    background: #111;
+
+    color: white;
+
+    padding: 1rem 1.5rem;
+
+    border-radius: 12px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform: translateY(20px);
+
+    transition: 0.4s ease;
+
     z-index: 9999;
 }
 
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+#toast.show {
+    opacity: 1;
+
+    transform: translateY(0);
 }
 
-@keyframes zoomIn {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+#toast.erro {
+    background: crimson;
 }
 
-@keyframes slideDown {
-    from { transform: translateY(-50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+#toast.sucesso {
+    background: #00aa55;
+}
+
+/* ========================
+    ⏳ LOADER
+======================== */
+#loader {
+    position: fixed;
+
+    inset: 0;
+
+    background: #000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 99999;
 }
 
 /* ========================
@@ -462,32 +687,333 @@ select, .extras-carrinho input, #secaoCartao input {
 ======================== */
 .footer {
     padding: 2rem 1rem;
+
     text-align: center;
+
     border-top: 1px solid var(--border-color);
+
     margin-top: 2rem;
 }
 
 .footer p {
     color: var(--text-muted);
-    font-size: 0.85rem;
 }
 
 /* ========================
-    📱 RESPONSIVIDADE
+    🎬 ANIMAÇÕES
+======================== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ========================
+    📱 RESPONSIVO
 ======================== */
 @media (max-width: 768px) {
-    nav { flex-direction: column; align-items: flex-start; }
-    nav a { margin-left: 0; }
-    .auth-box { flex-direction: column; }
-    .auth-left { display: none; }
-    .auth-right { width: 100%; }
-    .hero-content { width: 100%; }
-    .catalogo { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav a {
+        margin-left: 0;
+    }
+
+    .auth-box {
+        flex-direction: column;
+    }
+
+    .auth-left {
+        display: none;
+    }
+
+    .auth-right {
+        width: 100%;
+    }
+
+    .catalogo {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
 }
 
 @media (max-width: 480px) {
-    .catalogo { grid-template-columns: 1fr; }
-    #listaCarrinho li { flex-direction: column; align-items: flex-start; }
-    #listaCarrinho li button { margin-top: 0.5rem; }
-    button, .btn-explorar { width: 100%; }
+
+    .catalogo {
+        grid-template-columns: 1fr;
+    }
+
+    #listaCarrinho li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #listaCarrinho li button {
+        margin-top: 0.5rem;
+    }
+
+    button,
+    .btn-explorar {
+        width: 100%;
+    }
+
+    .card img {
+        height: 220px;
+    }
+}
+
+/* ==================================================
+   ♿ ACESSIBILIDADE ELITE HOOPS
+================================================== */
+
+/* Botão flutuante */
+#btnAcessibilidade{
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: linear-gradient(90deg,#ffcc00,#ff8800);
+
+    color: #000;
+
+    font-size: 1.8rem;
+
+    cursor: pointer;
+
+    z-index: 99999;
+
+    box-shadow: 0 0 20px rgba(255,204,0,.4);
+}
+
+#btnAcessibilidade:hover{
+    transform: scale(1.1);
+}
+
+/* Painel */
+.acessibilidade{
+
+    position: fixed;
+
+    right: 20px;
+    bottom: 90px;
+
+    width: 320px;
+
+    display: none;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    background: rgba(0,0,0,.95);
+
+    border: 1px solid rgba(255,204,0,.3);
+
+    backdrop-filter: blur(10px);
+
+    z-index: 99999;
+}
+
+.acessibilidade.ativo{
+    display: flex;
+}
+
+.acessibilidade button{
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+/* ==================================================
+   👨‍🦯 ALTO CONTRASTE
+================================================== */
+
+.alto-contraste{
+    background: #000 !important;
+    color: #fff !important;
+}
+
+.alto-contraste *{
+    background: #000 !important;
+    color: #fff !important;
+    border-color: #fff !important;
+}
+
+.alto-contraste button{
+    background: #fff !important;
+    color: #000 !important;
+}
+
+.alto-contraste img{
+    filter: contrast(150%);
+}
+
+/* ==================================================
+   🎨 DALTONISMO
+================================================== */
+
+.daltonico{
+    filter: contrast(120%) saturate(70%);
+}
+
+/* ==================================================
+   🌙 TEMA ESCURO ACESSÍVEL
+================================================== */
+
+.tema-acessivel{
+    --bg-body: #121212;
+    --bg-nav: rgba(20,20,20,.95);
+    --text-main: #ffffff;
+    --text-muted: #dddddd;
+}
+
+/* ==================================================
+   ✨ DESATIVAR ANIMAÇÕES
+================================================== */
+
+.sem-animacoes *,
+.sem-animacoes *::before,
+.sem-animacoes *::after{
+
+    animation: none !important;
+    transition: none !important;
+
+    scroll-behavior: auto !important;
+}
+
+/* ==================================================
+   ⌨️ FOCO PARA TECLADO
+================================================== */
+
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus{
+
+    outline: 4px solid #ffcc00;
+
+    outline-offset: 4px;
+}
+
+/* ==================================================
+   🔎 AUMENTO DE FONTE
+================================================== */
+
+body.fonte-grande{
+    font-size: 18px;
+}
+
+body.fonte-muito-grande{
+    font-size: 22px;
+}
+
+/* ==================================================
+   📱 RESPONSIVO
+================================================== */
+
+@media(max-width:768px){
+
+    .acessibilidade{
+
+        width: calc(100vw - 40px);
+
+        right: 20px;
+        left: 20px;
+    }
+
+    #btnAcessibilidade{
+
+        width: 55px;
+        height: 55px;
+
+        font-size: 1.5rem;
+    }
+}
+
+/* ==================================================
+   🦻 INDICADOR VISUAL DE LEITURA
+================================================== */
+
+.lendo{
+    box-shadow: 0 0 25px #ffcc00;
+}
+
+/* ==================================================
+   ♿ LINKS DE PULAR NAVEGAÇÃO
+================================================== */
+
+.skip-link{
+
+    position: absolute;
+
+    top: -50px;
+    left: 10px;
+
+    background: #ffcc00;
+
+    color: #000;
+
+    padding: 10px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    z-index: 100000;
+}
+
+.skip-link:focus{
+    top: 10px;
+}
+
+/* ==================================================
+   👆 ÁREA DE TOQUE MAIOR
+================================================== */
+
+button,
+a,
+input{
+
+    min-height: 44px;
 }

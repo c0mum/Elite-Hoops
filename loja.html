@@ -1,79 +1,221 @@
 <!DOCTYPE html>
 
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<title>Loja - Elite Hoops</title>
-<link rel="stylesheet" href="style.css">
-<link rel="shortcut icon" href="/img/ELITE HOOPS.png" type="image/x-icon">
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Loja - Elite Hoops</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link
+        rel="shortcut icon"
+        href="img/ELITE HOOPS.png"
+        type="image/x-icon"
+    >
+
 </head>
 
-<body>
+<body class="dark">
 
-<!-- LOADER -->
+    
 
-<div id="loader">
-  <h1>ELITE HOOPS</h1>
-</div>
+    <!-- ===================================== -->
+    <!-- ⏳ LOADER -->
+    <!-- ===================================== -->
+    <div id="loader">
+        <h1>ELITE HOOPS</h1>
+    </div>
 
-<div class="cursor"></div>
+    <div class="cursor"></div>
 
-<!-- NAVBAR -->
+    <!-- ===================================== -->
+    <!-- 🧭 NAVBAR -->
+    <!-- ===================================== -->
+    <nav>
 
-<nav>
-  <h1>ELITE HOOPS</h1>
+        <h1>
+            ELITE HOOPS
+        </h1>
 
-  <div>
-    <a href="index.html">Home</a>
-    <a href="carrinho.html">Carrinho</a>
-  </div>
+        <div class="nav-links">
 
-  <div id="userArea"></div>
-</nav>
+            <a href="index.html">
+                Home
+            </a>
 
-<!-- FILTROS -->
+            <a href="carrinho.html">
+                Carrinho
+            </a>
 
-<div class="filtros">
 
-  <input type="text" id="busca" placeholder="Buscar produto...">
+        </div>
 
-  <select id="categoria">
-    <option value="">Todas categorias</option>
-    <option value="basquete">Tênis de basquete</option>
-    <option value="futebol">Camisa de futebol</option>
-    <option value="moletom">Moletom</option>
-    <option value="calca">Calça</option>
-    <option value="short">Short</option>
-    <option value="meia">Meia</option>
-  </select>
+        <div id="userArea"></div>
 
-  <select id="ordenar">
-    <option value="">Ordenar</option>
-    <option value="menor">Menor preço</option>
-    <option value="maior">Maior preço</option>
-  </select>
+    </nav>
 
-</div>
+    <!-- ===================================== -->
+    <!-- 🔎 FILTROS -->
+    <!-- ===================================== -->
+    <section class="filtros">
 
-<!-- CATÁLOGO -->
+        <!-- BUSCA -->
+        <input
+            type="text"
+            id="busca"
+            placeholder="Buscar produto..."
+        >
 
-<section class="catalogo" id="catalogo"></section>
+        <!-- CATEGORIA -->
+        <select id="categoria">
 
-<!-- TOAST -->
+            <option value="">
+                Todas categorias
+            </option>
 
-<div id="toast"></div>
+            <option value="Basquete">
+                Tênis de Basquete
+            </option>
 
-<!-- TRANSIÇÃO -->
+            <option value="Futebol">
+                Camisa de Futebol
+            </option>
 
-<div id="pageTransition"></div>
+            <option value="Moletom">
+                Moletom
+            </option>
 
-<!-- FOOTER -->
+            <option value="Calças">
+                Calça
+            </option>
 
-<footer class="footer">
-  <p>&copy; 2026 Elite Hoops. Todos os direitos reservados.</p>
-</footer>
+            <option value="Shorts">
+                Short
+            </option>
 
-<script src="script.js"></script>
+            <option value="Meias">
+                Meia
+            </option>
+
+        </select>
+
+        <!-- ORDENAR -->
+        <select id="ordenar">
+
+            <option value="">
+                Ordenar
+            </option>
+
+            <option value="menor">
+                Menor preço
+            </option>
+
+            <option value="maior">
+                Maior preço
+            </option>
+
+        </select>
+
+    </section>
+
+    <!-- ===================================== -->
+    <!-- 🛍️ CATÁLOGO -->
+    <!-- ===================================== -->
+    <section
+        class="catalogo"
+        id="catalogo"
+    >
+    </section>
+
+    <!-- ===================================== -->
+    <!-- 🔔 TOAST -->
+    <!-- ===================================== -->
+    <div id="toast"></div>
+
+    <!-- ===================================== -->
+    <!-- 🔄 TRANSIÇÃO -->
+    <!-- ===================================== -->
+    <div id="pageTransition"></div>
+
+    <!-- ===================================== -->
+    <!-- 🦶 FOOTER -->
+    <!-- ===================================== -->
+    <footer class="footer">
+
+        <p>
+            &copy; 2026 Elite Hoops.
+            Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+    <!-- ===================================== -->
+    <!-- 🌗 SCRIPT TEMA -->
+    <!-- ===================================== -->
+    <script>
+
+        // CARREGAR TEMA SALVO
+        const temaSalvo =
+            localStorage.getItem("tema");
+
+        if (temaSalvo === "light") {
+
+            document.body.classList.remove("dark");
+            document.body.classList.add("light");
+
+            document
+                .getElementById("theme-toggle")
+                .innerHTML = "☀️";
+
+        }
+
+        // ALTERAR TEMA
+        function alternarTema() {
+
+            document.body.classList.toggle("light");
+            document.body.classList.toggle("dark");
+
+            const botao =
+                document.getElementById("theme-toggle");
+
+            if (
+                document.body.classList.contains("light")
+            ) {
+
+                localStorage.setItem(
+                    "tema",
+                    "light"
+                );
+
+                botao.innerHTML = "☀️";
+
+            }
+            else {
+
+                localStorage.setItem(
+                    "tema",
+                    "dark"
+                );
+
+                botao.innerHTML = "🌙";
+            }
+        }
+
+    </script>
+
+    <!-- ===================================== -->
+    <!-- 📜 SCRIPT PRINCIPAL -->
+    <!-- ===================================== -->
+    <script src="script.js"></script>
 
 </body>
+
 </html>

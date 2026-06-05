@@ -1,62 +1,169 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Cadastro - Elite Hoops</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="shortcut icon" href="img/ELITE HOOPS.png">
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Cadastro - Elite Hoops</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link
+        rel="shortcut icon"
+        href="img/ELITE HOOPS.png"
+        type="image/png"
+    >
 </head>
 
-<body>
+<body class="dark">
 
-<div id="loader"><h1>ELITE HOOPS</h1></div>
-
-<nav>
-  <h1>ELITE HOOPS</h1>
-  <div>
-    <a href="login.html">Entrar</a>
-  </div>
-</nav>
-
-<div class="auth-container">
-  <div class="auth-box">
-
-    <!-- 🔥 LADO ESQUERDO -->
-    <div class="auth-left">
-      <div class="left-content">
-        <img src="img/elitehooops.png" alt="logo">
-        <h2>Junte-se à Elite</h2>
-        <p>Crie sua conta e entre no jogo.</p>
-      </div>
+    <!-- ===================================== -->
+    <!-- ⏳ LOADER -->
+    <!-- ===================================== -->
+    <div id="loader">
+        <h1>ELITE HOOPS</h1>
     </div>
 
-    <!-- 📋 LADO DIREITO -->
-    <div class="auth-right">
-      <h2>Cadastro</h2>
+    <!-- ===================================== -->
+    <!-- 🧭 NAVBAR -->
+    <!-- ===================================== -->
+    <nav>
 
-      <div class="input-group">
-        <input type="text" id="nome" placeholder="Nome completo">
-      </div>
+        <h1>ELITE HOOPS</h1>
 
-      <div class="input-group">
-        <input type="email" id="email" placeholder="Email">
-      </div>
+        <div class="nav-links">
 
-      <div class="input-group">
-        <input type="password" id="senha" placeholder="Senha">
-        <span class="toggle-senha" onclick="toggleSenha()"></span>
-      </div>
+            <a href="login.html">
+                Entrar
+            </a>
 
-      <button onclick="registrar()">Criar Conta</button>
+        </div>
 
-      <p>Já tem conta? <a href="login.html">Entrar</a></p>
+    </nav>
+
+    <!-- ===================================== -->
+    <!-- 📦 CONTAINER -->
+    <!-- ===================================== -->
+    <div class="auth-container">
+
+        <div class="auth-box">
+
+            <!-- ============================== -->
+            <!-- 🔥 LADO ESQUERDO -->
+            <!-- ============================== -->
+            <div class="auth-left">
+
+                <div class="left-content">
+
+                    <img
+                        src="img/elitehooops.png"
+                        alt="Elite Hoops Logo"
+                    >
+
+                    <h2>
+                        Junte-se à Elite 🏀
+                    </h2>
+
+                    <p>
+                        Crie sua conta e entre no jogo.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- ============================== -->
+            <!-- 📋 LADO DIREITO -->
+            <!-- ============================== -->
+            <div class="auth-right">
+
+                <h2>Cadastro</h2>
+
+                <!-- NOME -->
+                <div class="input-group">
+
+                    <input
+                        type="text"
+                        id="nome"
+                        placeholder="Nome completo"
+                        autocomplete="name"
+                    >
+
+                </div>
+
+                <!-- EMAIL -->
+                <div class="input-group">
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Email"
+                        autocomplete="email"
+                    >
+
+                </div>
+
+
+
+                <!-- SENHA -->
+                <div class="input-group">
+
+                    <input
+                        type="password"
+                        id="senha"
+                        placeholder="Senha"
+                        autocomplete="new-password"
+                    >
+
+                    <span
+                        class="toggle-senha"
+                        onclick="toggleSenha()"
+                    >
+                        
+                    </span>
+
+                </div>
+
+                <!-- BOTÃO -->
+                <button
+                    class="btn-auth"
+                    onclick="cadastro()"
+                >
+                    Criar Conta
+                </button>
+
+                <!-- LOGIN -->
+                <p class="auth-link">
+
+                    Já tem conta?
+
+                    <a href="login.html">
+                        Entrar
+                    </a>
+
+                </p>
+
+            </div>
+
+        </div>
+
     </div>
 
-  </div>
-</div>
+    <!-- ===================================== -->
+    <!-- 🔔 TOAST -->
+    <!-- ===================================== -->
+    <div id="toast"></div>
 
-<div id="toast"></div>
+    <!-- ===================================== -->
+    <!-- 📜 SCRIPT -->
+    <!-- ===================================== -->
+    <script src="script.js"></script>
 
-<script src="script.js"></script>
 </body>
+
 </html>

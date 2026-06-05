@@ -1,105 +1,335 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho - Elite Hoops</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Carrinho - Elite Hoops
+    </title>
+
     <link rel="stylesheet" href="style.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 </head>
+
 <body>
 
-<div id="loader"><h1>ELITE HOOPS</h1></div>
+    <!-- =========================
+        ⏳ LOADER
+    ========================== -->
+    <div id="loader">
 
-<nav>
-    <h1>ELITE HOOPS</h1>
-    <div>
-        <a href="index.html">Home</a>
-        <a href="loja.html">Loja</a>
-        <a href="carrinho.html">Carrinho</a>
-        <span id="userArea"></span>
-    </div>
-</nav>
+        <h1>ELITE HOOPS</h1>
 
-<section class="pagina">
-    <div class="pagamento-box" id="checkoutMain">
-        <h2>Seu Carrinho</h2>
-        
-        <ul id="listaCarrinho"></ul>
-
-        <div class="extras-carrinho" style="margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
-            <div style="margin-bottom: 15px;">
-                <label>Calcular Frete (CEP):</label>
-                <div style="display: flex; gap: 5px;">
-                    <input type="text" id="cep" placeholder="00000-000" style="flex: 1;">
-                    <button onclick="calcularFreteUI()" style="width: auto; padding: 0 15px;">Calcular</button>
-                </div>
-            </div>
-            <div>
-                <label>Cupom de Desconto:</label>
-                <div style="display: flex; gap: 5px;">
-                    <input type="text" id="cupom" placeholder="Ex: DEV10" style="flex: 1;">
-                    <button onclick="aplicarCupom()" style="width: auto; padding: 0 15px;">Aplicar</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="resumo-valores" style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #333;">
-            <p>Subtotal: <span id="subtotal">R$ 0,00</span></p>
-            <p>Frete: <span id="freteTotal">R$ 0,00</span></p>
-            <p>Desconto: <span id="descontoTotal" style="color: red;">R$ 0,00</span></p>
-            <hr>
-            <h3>Total: <span id="totalGeral">R$ 0,00</span></h3>
-        </div>
-
-        <div id="secaoPagamento">
-            <label>Selecione a Forma de Pagamento:</label>
-            <select id="metodoPagamento" onchange="gerenciarMetodosPagamento()">
-                <option value="">Selecione...</option>
-                <option value="cartao">Cartão de Crédito</option>
-                <option value="pix">PIX (5% de Desconto)</option>
-                <option value="boleto">Boleto Bancário</option>
-            </select>
-
-            <div id="secaoCartao" style="display:none; margin-top: 15px;">
-                <h4>Dados do Cartão</h4>
-                <input type="text" id="cardNumero" placeholder="0000 0000 0000 0000">
-                <input type="text" id="cardNome" placeholder="Nome impresso no cartão">
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="cardValidade" placeholder="MM/AA">
-                    <input type="text" id="cardCVC" placeholder="CVC">
-                </div>
-                <label style="margin-top: 10px; display: block;">Parcelas:</label>
-                <select id="parcelas"></select>
-            </div>
-
-            <div id="secaoPix" style="display:none; text-align: center; margin-top: 15px; padding: 15px; border: 2px dashed #00bfa5;">
-                <h4>Pagamento via PIX</h4>
-                <div id="qrcode" style="display: flex; justify-content: center; margin: 15px 0;"></div>
-                <p style="font-size: 0.8em; color: #666;">O QR Code expira em 30 minutos.</p>
-            </div>
-
-            <div id="secaoBoleto" style="display:none; margin-top: 15px; padding: 15px; background: #eee;">
-                <h4>Boleto Bancário</h4>
-                <p style="font-size: 0.9em;">Copie a linha digitável abaixo:</p>
-                <code id="linhaDigitavel" style="display:block; background:#fff; padding:10px; border:1px solid #ccc; word-break:break-all; font-weight: bold; color: #000;"></code>
-                <p style="font-size: 0.8em; color: #666; margin-top: 5px;">Vencimento em: 3 dias úteis.</p>
-            </div>
-
-            <button onclick="processarPagamento()" style="margin-top:20px; width:100%; height: 50px; font-size: 1.1em; font-weight: bold; background: #007bff;">FINALIZAR COMPRA</button>
-        </div>
     </div>
 
-    <div id="checkoutArea"></div>
+    <!-- =========================
+        🧭 NAVBAR
+    ========================== -->
+    <nav>
 
-</section>
+        <h1 class="logo">
+            ELITE HOOPS
+        </h1>
 
-<footer class="footer">
-    <p>&copy; 2026 Elite Hoops. Todos os direitos reservados.</p>
-</footer>
+        <div class="nav-right">
 
-<div id="toast"></div>
+            <a href="index.html">
+                Home
+            </a>
 
-<script src="script.js"></script>
+            <a href="loja.html">
+                Loja
+            </a>
+
+            <a href="carrinho.html">
+                Carrinho
+            </a>
+
+
+            <!-- 👤 ÁREA USUÁRIO -->
+            <div id="userArea"></div>
+
+        </div>
+
+    </nav>
+
+    <!-- =========================
+        🛒 CARRINHO
+    ========================== -->
+    <section class="pagina">
+
+        <div
+            class="pagamento-box"
+            id="checkoutMain"
+        >
+
+            <h2>
+                Seu Carrinho
+            </h2>
+
+            <!-- LISTA -->
+            <ul id="listaCarrinho"></ul>
+
+            <!-- =====================
+                🚚 FRETE + CUPOM
+            ====================== -->
+            <div class="extras-carrinho">
+
+                <!-- CEP -->
+                <div class="campo-extra">
+
+                    <label>
+                        Calcular Frete (CEP)
+                    </label>
+
+                    <div class="grupo-input">
+
+                        <input
+                            type="text"
+                            id="cep"
+                            placeholder="00000-000"
+                        >
+
+                        <button onclick="calcularFreteUI()">
+                            Calcular
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- CUPOM -->
+                <div class="campo-extra">
+
+                    <label>
+                        Cupom de Desconto
+                    </label>
+
+                    <div class="grupo-input">
+
+                        <input
+                            type="text"
+                            id="cupom"
+                            placeholder="Ex: DEV10"
+                        >
+
+                        <button onclick="aplicarCupom()">
+                            Aplicar
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- =====================
+                💰 RESUMO
+            ====================== -->
+            <div class="resumo-valores">
+
+                <p>
+                    Subtotal:
+                    <span id="subtotal">
+                        R$ 0,00
+                    </span>
+                </p>
+
+                <p>
+                    Frete:
+                    <span id="freteTotal">
+                        R$ 0,00
+                    </span>
+                </p>
+
+                <p>
+                    Desconto:
+                    <span id="descontoTotal" class="desconto">
+                        R$ 0,00
+                    </span>
+                </p>
+
+                <h3>
+                    Total:
+                    <span id="totalGeral">
+                        R$ 0,00
+                    </span>
+                </h3>
+
+            </div>
+
+            <!-- =====================
+                💳 PAGAMENTO
+            ====================== -->
+            <div id="secaoPagamento">
+
+                <label>
+                    Selecione a Forma de Pagamento
+                </label>
+
+                <select
+                    id="metodoPagamento"
+                    onchange="gerenciarMetodosPagamento()"
+                >
+
+                    <option value="">
+                        Selecione...
+                    </option>
+
+                    <option value="cartao">
+                        Cartão de Crédito
+                    </option>
+
+                    <option value="pix">
+                        PIX (5% OFF)
+                    </option>
+
+                    <option value="boleto">
+                        Boleto Bancário
+                    </option>
+
+                </select>
+
+                <!-- =================
+                    💳 CARTÃO
+                ================== -->
+                <div
+                    id="secaoCartao"
+                    style="display:none;"
+                >
+
+                    <h4>
+                        Dados do Cartão
+                    </h4>
+
+                    <input
+                        type="text"
+                        id="cardNumero"
+                        placeholder="0000 0000 0000 0000"
+                    >
+
+                    <input
+                        type="text"
+                        id="cardNome"
+                        placeholder="Nome impresso no cartão"
+                    >
+
+                    <div class="linha-cartao">
+
+                        <input
+                            type="text"
+                            id="cardValidade"
+                            placeholder="MM/AA"
+                        >
+
+                        <input
+                            type="text"
+                            id="cardCVC"
+                            placeholder="CVC"
+                        >
+
+                    </div>
+
+                    <label class="label-parcelas">
+                        Parcelas
+                    </label>
+
+                    <select id="parcelas"></select>
+
+                </div>
+
+                <!-- =================
+                    📲 PIX
+                ================== -->
+                <div
+                    id="secaoPix"
+                    style="display:none;"
+                >
+
+                    <h4>
+                        Pagamento via PIX
+                    </h4>
+
+                    <div id="qrcode"></div>
+
+                    <p class="texto-info">
+                        O QR Code expira em 30 minutos.
+                    </p>
+
+                </div>
+
+                <!-- =================
+                    🧾 BOLETO
+                ================== -->
+                <div
+                    id="secaoBoleto"
+                    style="display:none;"
+                >
+
+                    <h4>
+                        Boleto Bancário
+                    </h4>
+
+                    <p class="texto-info">
+                        Copie a linha digitável abaixo:
+                    </p>
+
+                    <code id="linhaDigitavel"></code>
+
+                    <p class="texto-info">
+                        Vencimento em 3 dias úteis.
+                    </p>
+
+                </div>
+
+                <!-- =================
+                    🛍️ FINALIZAR
+                ================== -->
+                <button
+                    onclick="processarPagamento()"
+                    class="btn-finalizar"
+                >
+                    FINALIZAR COMPRA
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+        🦶 FOOTER
+    ========================== -->
+    <footer class="footer">
+
+        <p>
+            &copy; 2026 Elite Hoops.
+            Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+    <!-- =========================
+        🔔 TOAST
+    ========================== -->
+    <div id="toast"></div>
+
+    <!-- =========================
+        📜 SCRIPT
+    ========================== -->
+    <script src="script.js"></script>
+
 </body>
+
 </html>

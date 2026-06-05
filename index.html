@@ -1,62 +1,251 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elite Hoops</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  
-    <div id="loader">
-        <h1>ELITE HOOPS</h1>
-    </div>
-    <div class="cursor"></div>
+<html lang="pt-BR">
 
-    <nav>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Elite Hoops</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- =========================
+        ♿ BOTÃO ACESSIBILIDADE
+    ========================== -->
+    <button
+        id="btnAcessibilidade"
+        aria-label="Abrir menu de acessibilidade"
+    >
+        ♿
+    </button>
+
+    <!-- =========================
+        ♿ PAINEL ACESSIBILIDADE
+    ========================== -->
+    <div
+        class="acessibilidade"
+        id="painelAcessibilidade"
+    >
+
+        <button onclick="aumentarFonte()">
+            A+
+        </button>
+
+        <button onclick="diminuirFonte()">
+            A-
+        </button>
+
+        <button onclick="alternarContraste()">
+            Alto Contraste
+        </button>
+
+        <button onclick="alternarDaltonico()">
+            Modo Daltônico
+        </button>
+
+        <button onclick="lerPagina()">
+            Ler Página
+        </button>
+
+        <button onclick="pararLeitura()">
+            Parar Leitura
+        </button>
+
+        <button onclick="alternarAnimacoes()">
+            Animações
+        </button>
+
+        <button onclick="alternarTema()">
+            Tema Escuro
+        </button>
+
+    </div>
+
+    <!-- =========================
+        ⏳ LOADER
+    ========================== -->
+    <div id="loader">
+
         <h1>ELITE HOOPS</h1>
-        <div>
-            <a href="index.html">Home</a>
-            <a href="loja.html">Loja</a>
-            <a href="carrinho.html">Carrinho</a>
-            <button id="theme-toggle" class="btn-tema-home" style="display: none; margin-left: 15px;">🌓 Tema</button>
+
+    </div>
+
+    <!-- =========================
+        🖱️ CURSOR
+    ========================== -->
+    <div
+        class="cursor"
+        aria-hidden="true"
+    ></div>
+
+    <!-- =========================
+        🧭 NAVBAR
+    ========================== -->
+    <nav>
+
+        <h1 class="logo">
+            ELITE HOOPS
+        </h1>
+
+        <div class="nav-right">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="loja.html">
+                Loja
+            </a>
+
+            <a href="carrinho.html">
+                Carrinho
+            </a>
+
+            <!-- BOTÃO TEMA -->
+            <button
+                id="theme-toggle"
+                class="theme-btn"
+                aria-label="Alternar tema"
+            >
+                🌙
+            </button>
+
+            <!-- 👤 USER AREA -->
+            <div id="userArea"></div>
+
         </div>
-        <div id="userArea"></div>
+
     </nav>
 
-    <section class="hero">
-        <video autoplay muted loop id="bg-video">
-            <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+    <!-- =========================
+        🎥 HERO
+    ========================== -->
+    <section
+        class="hero"
+        id="inicio"
+    >
+
+        <video
+            autoplay
+            muted
+            loop
+            playsinline
+            id="bg-video"
+            aria-label="Vídeo de fundo decorativo"
+        >
+
+            <source
+                src="https://www.w3schools.com/howto/rain.mp4"
+                type="video/mp4"
+            >
+
         </video>
 
+        <div class="hero-overlay"></div>
+
         <div class="hero-content">
-            <h2>DOMINE A QUADRA</h2>
-            
+
+            <h2>
+                DOMINE A QUADRA
+            </h2>
+
+            <p class="hero-subtitle">
+                Performance, estilo e tecnologia em cada passo.
+            </p>
+
             <div class="botoes-hero">
-                <a href="loja.html"><button class="btn-explorar">Explorar</button></a>
+
+                <a href="loja.html">
+
+                    <button class="btn-explorar">
+                        Explorar Coleção
+                    </button>
+
+                </a>
+
             </div>
 
-            <br><br>
+            <div
+                class="sobre-container"
+                id="sobre"
+            >
 
-            <div class="sobre-container">
-                <span>Sobre <strong>Nós</strong></span>
+                <span>
+                    Sobre <strong>Nós</strong>
+                </span>
+
                 <p>
-                    Fundada em 2026 na cidade de Araçatuba, São Paulo, a <strong>Elite Hoops</strong> nasceu da paixão pelo 
-                    alto desempenho. Inspirada por gigantes como Nike e Jordan, nossa trajetória é pautada pela excelência. 
-                    Sob a visão dos desenvolvedores <strong>Eder Generoso Ferreira</strong> e <strong>Guilherme Ferreira Da Silva</strong>, 
-                    unimos tecnologia e design para garantir a máxima performance em cada passo.
+                    Fundada em 2026 na cidade de Araçatuba, São Paulo,
+                    a <strong>Elite Hoops</strong> nasceu da paixão
+                    pelo alto desempenho.
+
+                    Inspirada por gigantes como Nike e Jordan,
+                    nossa trajetória é construída em cima de inovação,
+                    estilo e performance.
+
+                    Sob a visão dos desenvolvedores
+                    <strong>Eder Generoso Ferreira</strong>,
+                    <strong>Eduardo Barbosa Valerio</strong>
+                    e
+                    <strong>Guilherme Ferreira Da Silva</strong>,
+                    unimos tecnologia moderna com design premium
+                    para entregar uma experiência brutalmente
+                    diferenciada.
+
+                    O tipo de site que até o cartão de crédito
+                    começa a suar frio quando entra.
                 </p>
+
             </div>
+
         </div>
+
     </section>
 
+    <!-- =========================
+        CONTATO
+    ========================== -->
+    <section id="contato"></section>
+
+    <!-- =========================
+        🦶 FOOTER
+    ========================== -->
     <footer class="footer">
-        <p>&copy; 2026 Elite Hoops. Todos os direitos reservados.</p>
+
+        <p>
+            &copy; 2026 Elite Hoops.
+            Todos os direitos reservados.
+        </p>
+
     </footer>
 
+    <!-- =========================
+        🔥 TRANSIÇÃO
+    ========================== -->
     <div id="pageTransition"></div>
-    <div id="toast"></div>
 
+    <!-- =========================
+        🔔 TOAST
+    ========================== -->
+    <div
+        id="toast"
+        aria-live="polite"
+    ></div>
+
+    <!-- =========================
+        📜 SCRIPT
+    ========================== -->
     <script src="script.js"></script>
+
 </body>
+
 </html>
